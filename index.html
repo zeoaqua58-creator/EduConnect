@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form | Edu Connect</title>
+  <title>Login Form | EduConnect</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="wrapper">
     <form id="loginForm">
       <h1>Login</h1>
+
       <div class="input-box">
         <input type="text" id="username" placeholder="Username" required>
         <i class='bx bxs-user'></i>
@@ -22,8 +23,8 @@
       </div>
 
       <div class="remember-forgot">
-        <label><input type="checkbox">Remember Me</label>
-        <a href="#">Forgot Password</a>
+        <label><input type="checkbox" id="rememberMe"> Remember Me</label>
+        <a href="#">Forgot Password?</a>
       </div>
 
       <button type="submit" class="btn">Login</button>
@@ -34,21 +35,35 @@
     </form>
   </div>
 
-  <!-- 🔹 Add JavaScript here -->
+  <!-- ✅ JavaScript -->
   <script>
     document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // stop the form from reloading page
+      event.preventDefault(); // stop form from reloading
 
-      let username = document.getElementById("username").value;
-      let password = document.getElementById("password").value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-      // Simple test login (fake for now)
+      // ✅ simple test login
       if (username === "admin" && password === "1234") {
-        window.location.href = "website.html"; // redirect to your website
+        // optional: store login if "Remember Me" checked
+        if (document.getElementById("rememberMe").checked) {
+          localStorage.setItem("isLoggedIn", "true");
+        }
+
+        // redirect to website.html (your EduConnect page)
+        window.location.href = "website.html";
       } else {
         alert("Invalid username or password!");
       }
     });
+
+    // ✅ Optional auto-login if "Remember Me" was checked before
+    window.onload = function() {
+      if (localStorage.getItem("isLoggedIn") === "true") {
+        window.location.href = "website.html";
+      }
+    };
   </script>
 </body>
 </html>
+
