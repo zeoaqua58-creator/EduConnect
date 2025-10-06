@@ -20,6 +20,33 @@
       align-items: center;
     }
 
+    /* 🔹 NAVIGATION BAR */
+    .navbar {
+      width: 100%;
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      gap: 25px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar a {
+      color: #00cc66;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1em;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #00ff99;
+      text-decoration: underline;
+    }
+
     header {
       width: 100%;
       background-color: #1a1a1a;
@@ -29,19 +56,19 @@
     }
 
     .logo img {
-     width: 120px;
-     height: 120px;
-     object-fit: cover;   /* makes sure the image fills the circle */
-     border-radius: 50%;  /* makes it perfectly round */
-     border: 3px solid #00cc66; /* optional: adds a green border */
-     margin-bottom: 10px;
-   }
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #00cc66;
+      margin-bottom: 10px;
+    }
 
     .logo img:hover {
-     box-shadow: 0 0 20px #00ff99;
-     transform: scale(1.05);
-     transition: 0.3s ease;
-   }
+      box-shadow: 0 0 20px #00ff99;
+      transform: scale(1.05);
+      transition: 0.3s ease;
+    }
 
     .header-pic {
       margin-top: 10px;
@@ -54,6 +81,72 @@
       color: #00cc66;
     }
 
+    /* 🌟 HERO SECTION */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(120deg, #003300, #00cc66);
+      background-size: 400% 400%;
+      animation: gradientMove 8s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .hero h1 span {
+      color: #00ff99;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .hero-btn {
+      background: #00ff99;
+      color: #003300;
+      padding: 12px 28px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .hero-btn:hover {
+      background: #fff;
+      color: #003300;
+      transform: scale(1.05);
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🔹 ABOUT SECTION */
     .about-section {
       display: flex;
       flex-wrap: wrap;
@@ -103,6 +196,7 @@
       background-color: #00ff88;
     }
 
+    /* 🔹 SUBJECT SECTION */
     .subjects {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -128,6 +222,7 @@
       color: black;
     }
 
+    /* 🔹 FOOTER */
     footer {
       background-color: #f0f0f0;
       width: 100%;
@@ -147,7 +242,7 @@
       text-decoration: underline;
     }
 
-    /* Modal */
+    /* 🔹 MODAL */
     .modal {
       display: none;
       position: fixed;
@@ -178,22 +273,26 @@
       font-weight: bold;
     }
 
+    /* 🔹 RESPONSIVE */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.8em;
-      }
-      .about-pic {
-        width: 90%;
-        height: 150px;
-      }
-      .logo img {
-        width: 100px;
-        height: 100px;
-      }
+      h1 { font-size: 1.8em; }
+      .about-pic { width: 90%; height: 150px; }
+      .logo img { width: 100px; height: 100px; }
+      .navbar { flex-wrap: wrap; gap: 15px; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
+
+  <!-- 🔹 Navigation Bar -->
+  <nav class="navbar">
+    <a href="#about">About</a>
+    <a href="#subjects">Subjects</a>
+    <a href="#contact">Contact</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
 
   <header>
     <div class="logo">
@@ -203,7 +302,16 @@
     <h1>EDUCONNECT</h1>
   </header>
 
-  <section class="about-section">
+  <!-- 🌟 HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to <span>EduConnect</span></h1>
+      <p>Empowering students through technology and connection.</p>
+      <a href="#subjects" class="hero-btn">Get Started</a>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
     <div class="about-pic">📘 EDUCATION</div>
     <div class="about-text">
       <h3>About Us</h3>
@@ -218,7 +326,7 @@
     </div>
   </section>
 
-  <section class="subjects">
+  <section id="subjects" class="subjects">
     <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_PRECAL')">PRE-CAL</div>
     <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_EARTHSCIENCE')">EARTH SCIENCE</div>
     <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_ORALCOMM')">ORAL COMMUNICATION</div>
@@ -227,7 +335,7 @@
     <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_EMTECH')">EMPOWERMENT TECHNOLOGY</div>
   </section>
 
-  <footer>
+  <footer id="contact">
     <strong>Contact:</strong><br>
     <a href="mailto:email@educonnect.com"> Email</a> |
     <a href="tel:+639123456789"> Call</a> |
@@ -257,12 +365,14 @@
       }
     }
 
-    // Opens Google Drive links in a new tab
     function openDrive(url) {
       window.open(url, '_blank');
     }
-  </script>
 
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
-
