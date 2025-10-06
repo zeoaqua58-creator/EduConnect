@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduConnect</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+    }
+
+    .logo img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .header-pic {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-top: 10px;
+      color: #00cc66;
+    }
+
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+      width: 90%;
+      margin: 30px 0;
+    }
+
+    .about-pic {
+      background-color: #1a1a1a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 250px;
+      height: 200px;
+      font-size: 1.5em;
+      font-weight: bold;
+      border-radius: 10px;
+    }
+
+    .about-text {
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    .about-text h3 {
+      margin-bottom: 5px;
+      color: #00cc66;
+    }
+
+    .learn-more {
+      background-color: #00cc66;
+      border: none;
+      padding: 8px 15px;
+      color: black;
+      border-radius: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .learn-more:hover {
+      background-color: #00ff88;
+    }
+
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      width: 90%;
+      margin-bottom: 40px;
+    }
+
+    .subject-box {
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 40px 0;
+      font-weight: bold;
+      border-radius: 10px;
+      transition: transform 0.3s, background-color 0.3s;
+      cursor: pointer;
+    }
+
+    .subject-box:hover {
+      transform: scale(1.05);
+      background-color: #00cc66;
+      color: black;
+    }
+
+    footer {
+      background-color: #f0f0f0;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      font-size: 1em;
+    }
+
+    footer a {
+      margin: 0 10px;
+      color: #00cc66;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .close-btn {
+      background-color: #00cc66;
+      border: none;
+      padding: 8px 15px;
+      color: black;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .about-pic {
+        width: 90%;
+        height: 150px;
+      }
+      .logo img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="educonnect-logo.jpg" alt="EduConnect Logo">
+    </div>
+    <div class="header-pic">A Learning Buddy for STEM Students</div>
+    <h1>EDUCONNECT</h1>
+  </header>
+
+  <section class="about-section">
+    <div class="about-pic">📘 EDUCATION</div>
+    <div class="about-text">
+      <h3>About Us</h3>
+      <p>EduConnect is a platform dedicated to helping students and teachers connect through learning resources and tools.</p>
+      <h3>Mission</h3>
+      <p>To make education more accessible and engaging.</p>
+      <h3>Vision</h3>
+      <p>Empowering learners through technology.</p>
+      <h3>Goals</h3>
+      <p>Enhance collaboration and simplify learning.</p>
+      <button class="learn-more" onclick="openModal()">Learn More</button>
+    </div>
+  </section>
+
+  <section class="subjects">
+    <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_PRECAL')">PRE-CAL</div>
+    <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_EARTHSCIENCE')">EARTH SCIENCE</div>
+    <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_ORALCOMM')">ORAL COMMUNICATION</div>
+    <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_BIO')">GENERAL BIOLOGY</div>
+    <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_LIT')">LITERATURE</div>
+    <div class="subject-box" onclick="openDrive('https://drive.google.com/drive/folders/EXAMPLE_EMTECH')">EMPOWERMENT TECHNOLOGY</div>
+  </section>
+
+  <footer>
+    <strong>Contact:</strong><br>
+    <a href="mailto:email@educonnect.com"> Email</a> |
+    <a href="tel:+639123456789"> Call</a> |
+    <a href="https://facebook.com" target="_blank"> Facebook</a>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="infoModal">
+    <div class="modal-content">
+      <h2>About EduConnect</h2>
+      <p>EduConnect bridges the gap between learners and educators by offering easy access to educational tools, subject materials, and interactive learning features. Our goal is to make learning fun, accessible, and effective for everyone.</p>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById("infoModal").style.display = "flex";
+    }
+    function closeModal() {
+      document.getElementById("infoModal").style.display = "none";
+    }
+    window.onclick = function(event) {
+      const modal = document.getElementById("infoModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // Opens Google Drive links in a new tab
+    function openDrive(url) {
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+</html>
