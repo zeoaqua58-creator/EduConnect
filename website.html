@@ -29,11 +29,19 @@
     }
 
     .logo img {
-      width: 120px;
-      height: 120px;
-      object-fit: contain;
-      margin-bottom: 10px;
-    }
+     width: 120px;
+     height: 120px;
+     object-fit: cover;   /* makes sure the image fills the circle */
+     border-radius: 50%;  /* makes it perfectly round */
+     border: 3px solid #00cc66; /* optional: adds a green border */
+     margin-bottom: 10px;
+   }
+
+    .logo img:hover {
+     box-shadow: 0 0 20px #00ff99;
+     transform: scale(1.05);
+     transition: 0.3s ease;
+   }
 
     .header-pic {
       margin-top: 10px;
@@ -189,7 +197,7 @@
 
   <header>
     <div class="logo">
-      <img src="educonnect-logo.jpg" alt="EduConnect Logo">
+      <img src="logo.jpg" alt="EduConnect Logo">
     </div>
     <div class="header-pic">A Learning Buddy for STEM Students</div>
     <h1>EDUCONNECT</h1>
@@ -257,3 +265,4 @@
 
 </body>
 </html>
+
