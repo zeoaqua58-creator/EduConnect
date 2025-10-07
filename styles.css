@@ -1,225 +1,204 @@
+/* ===== Reset + Base ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
-body {
+body, html {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, black, #004d00);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(120deg, #000000, #004d00, #000000);
-  background-size: 400% 400%;
-  animation: gradientShift 12s ease infinite;
+  animation: gradientShift 10s infinite alternate;
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* ===== Shake animation ===== */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
+  0% { background: linear-gradient(135deg, black, #004d00); }
+  50% { background: linear-gradient(135deg, #002200, #006600); }
+  100% { background: linear-gradient(135deg, black, #004d00); }
 }
 
 .wrapper {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   width: 90%;
-  max-width: 420px;
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid rgba(255, 255, 255, .2);
-  backdrop-filter: blur(9px);
-  color: #fff;
-  border-radius: 12px;
-  padding: 30px 25px;
-  transition: all 0.3s ease;
-  animation: fadeIn 1s ease;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+  position: relative;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.wrapper.shake {
-  animation: shake 0.5s;
-}
-
-.wrapper h1 {
-  font-size: 28px;
-  text-align: center;
-  color: #a8ff60;
+/* Logo */
+.logo img {
+  width: 80px;
+  height: auto;
   margin-bottom: 20px;
-}
-
-/* ===== Logo ===== */
-.wrapper .logo {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.wrapper .logo img {
-  width: 90px;
-  height: 90px;
   border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 10px rgba(168, 255, 96, 0.6);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.wrapper .logo img:hover {
-  transform: scale(1.05);
+/* Title */
+h1 {
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  letter-spacing: 1px;
 }
 
-/* ===== Input boxes ===== */
+/* Input Boxes */
 .input-box {
   position: relative;
-  width: 100%;
-  height: 50px;
-  margin: 20px 0;
+  margin-bottom: 20px;
 }
 
 .input-box input {
   width: 100%;
-  height: 100%;
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, .2);
-  border-radius: 40px;
+  padding: 12px 40px 12px 15px;
+  border-radius: 10px;
+  border: none;
   outline: none;
-  font-size: 16px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.2);
   color: #fff;
-  padding: 0 45px 0 20px;
-  transition: 0.3s;
 }
 
 .input-box input::placeholder {
-  color: #bbb;
-}
-
-.input-box input:focus {
-  border-color: #a8ff60;
-  box-shadow: 0 0 8px #a8ff60;
+  color: #eee;
 }
 
 .input-box i {
   position: absolute;
-  right: 20px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
-  color: #a8ff60;
+  color: #fff;
+  font-size: 1.2rem;
 }
 
-/* ===== Remember/Forgot Section ===== */
+/* Focus Effects */
+.input-box input:focus {
+  background: rgba(255,255,255,0.3);
+  box-shadow: 0 0 8px #00ff00;
+}
+
+/* Show Password */
+.show-password {
+  color: #fff;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.show-password input {
+  margin-right: 8px;
+}
+
+/* Remember / Forgot */
 .remember-forgot {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
-  margin: -5px 0 15px;
-  gap: 10px;
-}
-
-.remember-forgot label {
-  display: flex;
-  align-items: center;
-}
-
-.remember-forgot label input {
-  accent-color: #a8ff60;
-  margin-right: 6px;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
 }
 
 .remember-forgot a {
-  color: #c0ffc0;
+  color: #00ff00;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .remember-forgot a:hover {
-  text-decoration: underline;
+  color: #00cc00;
 }
 
-/* ===== Show Password ===== */
-.show-password {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #c0ffc0;
-  font-size: 14px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-/* ===== Button ===== */
+/* Buttons */
 .btn {
   width: 100%;
-  height: 45px;
-  background: #00a000;
+  padding: 12px;
+  border-radius: 10px;
   border: none;
-  outline: none;
-  border-radius: 40px;
+  background-color: #00ff00;
+  color: black;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
-  background: #00ff00;
-  color: #000;
-  transform: scale(1.03);
+  background-color: #00cc00;
+  transform: scale(1.05);
 }
 
-/* ===== Register link ===== */
-.register-link {
-  font-size: 14px;
-  text-align: center;
-  margin: 20px 0 10px;
+/* Register Link */
+.register-link p {
+  color: #fff;
+  font-size: 0.9rem;
+  margin-top: 15px;
 }
 
-.register-link p a {
-  color: #a8ff60;
+.register-link a {
+  color: #00ff00;
   text-decoration: none;
-  font-weight: 600;
 }
 
-.register-link p a:hover {
-  text-decoration: underline;
+.register-link a:hover {
+  color: #00cc00;
 }
 
-/* ===== Mobile Fixes ===== */
-@media (max-width: 480px) {
+/* Shake Animation for wrong login */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-8px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+/* ===== Mobile Responsive ===== */
+@media screen and (max-width: 480px) {
   .wrapper {
-    padding: 25px 20px;
+    padding: 25px;
   }
 
-  .wrapper h1 {
-    font-size: 24px;
+  h1 {
+    font-size: 1.5rem;
   }
 
-  .input-box input {
-    font-size: 14px;
+  .input-box input, .btn {
+    padding: 10px;
+    font-size: 0.95rem;
   }
 
-  .btn {
-    font-size: 15px;
+  .logo img {
+    width: 60px;
   }
 
   .remember-forgot {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .remember-forgot a {
-    margin-top: 5px;
+    gap: 5px;
   }
 }
+
+
 
