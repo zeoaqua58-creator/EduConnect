@@ -9,13 +9,17 @@
 html, body {
   height: 100%;
   width: 100%;
-  background: linear-gradient(135deg, black, #004d00);
-  background-size: 400% 400%;
-  animation: gradientShift 10s ease infinite alternate;
+  overflow-x: hidden;
+}
+
+/* ===== Background ===== */
+body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
+  background: linear-gradient(135deg, black, #004d00);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite alternate;
 }
 
 @keyframes gradientShift {
@@ -24,7 +28,7 @@ html, body {
   100% { background-position: 0% 50%; }
 }
 
-/* Wrapper */
+/* ===== Wrapper ===== */
 .wrapper {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -35,21 +39,21 @@ html, body {
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
-/* Logo */
+/* ===== Logo ===== */
 .logo img {
   width: 80px;
-  height: 80px; /* force square */
+  height: 80px;
   object-fit: cover;
-  border-radius: 50%; /* make circular */
+  border-radius: 50%;
   margin-bottom: 20px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-/* Title */
+/* ===== Title ===== */
 h1 {
   color: #fff;
   margin-bottom: 30px;
@@ -57,7 +61,7 @@ h1 {
   letter-spacing: 1px;
 }
 
-/* Input Boxes */
+/* ===== Input Boxes ===== */
 .input-box {
   position: relative;
   margin-bottom: 20px;
@@ -75,6 +79,10 @@ h1 {
   color: #fff;
 }
 
+.input-box input::placeholder {
+  color: #eee;
+}
+
 .input-box i {
   position: absolute;
   right: 15px;
@@ -84,7 +92,7 @@ h1 {
   font-size: 1.2rem;
 }
 
-/* Show Password */
+/* ===== Show Password ===== */
 .show-password {
   display: flex;
   align-items: center;
@@ -98,7 +106,7 @@ h1 {
   margin-right: 8px;
 }
 
-/* Remember / Forgot */
+/* ===== Remember / Forgot ===== */
 .remember-forgot {
   display: flex;
   justify-content: space-between;
@@ -112,6 +120,7 @@ h1 {
 .remember-forgot label {
   display: flex;
   align-items: center;
+  gap: 8px; /* space between checkbox and text */
 }
 
 .remember-forgot a {
@@ -123,7 +132,7 @@ h1 {
   color: #00cc00;
 }
 
-/* Button */
+/* ===== Button ===== */
 .btn {
   width: 100%;
   padding: 12px;
@@ -141,7 +150,7 @@ h1 {
   transform: scale(1.05);
 }
 
-/* Register Link */
+/* ===== Register Link ===== */
 .register-link p {
   color: #fff;
   font-size: 0.9rem;
@@ -157,7 +166,7 @@ h1 {
   color: #00cc00;
 }
 
-/* Shake animation */
+/* ===== Shake Animation ===== */
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-8px); }
@@ -170,7 +179,7 @@ h1 {
   animation: shake 0.5s;
 }
 
-/* ===== Mobile Responsiveness ===== */
+/* ===== Mobile ===== */
 @media screen and (max-width: 480px) {
   .wrapper {
     padding: 25px;
@@ -197,6 +206,7 @@ h1 {
     gap: 5px;
   }
 }
+
 
 
 
