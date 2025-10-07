@@ -164,6 +164,7 @@
       border-radius: 10px;
       transition: transform 0.3s, background-color 0.3s;
       cursor: pointer;
+      position: relative;
     }
     .subject-box:hover { transform: scale(1.05); background-color: #00cc66; color: black; }
 
@@ -219,6 +220,9 @@
     }
     .flashcard-controls button:hover { background-color: #00ff99; }
 
+    /* placeholder for Take Quiz button */
+    #take-quiz-wrap { margin-top: 16px; }
+
     /* --------------------------
        FOOTER
        -------------------------- */
@@ -233,7 +237,7 @@
     footer a:hover { text-decoration: underline; }
 
     /* --------------------------
-       MODAL
+       MODAL (About)
        -------------------------- */
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -242,6 +246,45 @@
     .modal-content { background-color: white; padding: 20px; border-radius: 10px; max-width: 400px; text-align: center; }
     .close-btn { background-color: #00cc66; border: none; padding: 8px 15px; color: black; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: bold; }
 
+    /* --------------------------
+       QUIZ MODAL (dark theme)
+       -------------------------- */
+    .quiz-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 2000; }
+    .quiz-content {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      background: #222; /* dark gray */
+      color: #e6ffee; /* light greenish text */
+      text-align: left;
+    }
+    .quiz-header { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .quiz-title { color: #00cc66; font-size: 1.3rem; margin:0; }
+    .quiz-body { margin-top: 16px; }
+    .quiz-question { font-size: 1.1rem; margin-bottom: 12px; color: #dfffe3; }
+    .quiz-options { display:flex; flex-direction:column; gap:10px; }
+    .quiz-options button {
+      background: #333;
+      color: #e6ffee;
+      border: 2px solid #333;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .quiz-options button:hover { border-color: #00cc66; }
+    .quiz-options button.correct { background: #005b2a; border-color: #00cc66; color: #dfffe3; }
+    .quiz-options button.wrong { background: #3a1a1a; border-color: #ff6666; color: #ffdede; }
+    .quiz-footer { margin-top: 16px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .quiz-btn { background: #00cc66; color: black; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:bold; }
+    .quiz-close { background: #444; color: #e6ffee; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+
+    @media (max-width:600px) {
+      .quiz-content { padding: 14px; }
+      .quiz-question { font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -342,8 +385,6 @@
 }
 </style>
 
-
-
   <!-- ==========================
        SUBJECTS (these trigger drive + flashcards)
        ========================== -->
@@ -384,6 +425,9 @@
       <button id="flipBtn" onclick="flipCard()" aria-label="Flip card">🔄 Flip</button>
       <button id="nextBtn" onclick="nextCard()" aria-label="Next card">➡️ Next</button>
     </div>
+
+    <!-- placeholder where Take Quiz button will be inserted -->
+    <div id="take-quiz-wrap" style="display:flex; justify-content:center;"></div>
   </section>
 
   <!-- ==========================
@@ -408,6 +452,31 @@
   </div>
 
   <!-- ==========================
+       QUIZ MODAL (dark themed)
+       ========================== -->
+  <div class="quiz-modal" id="quizModal" aria-hidden="true">
+    <div class="quiz-content" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+      <div class="quiz-header">
+        <h3 id="quizTitle" class="quiz-title">Quiz</h3>
+        <div id="quizProgress" style="color:#c7ffd4; font-size:0.95rem;"></div>
+      </div>
+
+      <div class="quiz-body">
+        <div id="quizQuestion" class="quiz-question"></div>
+        <div id="quizOptions" class="quiz-options"></div>
+      </div>
+
+      <div class="quiz-footer">
+        <div id="quizResult" style="color:#dfffe3; font-weight:bold;"></div>
+        <div style="margin-left:auto; display:flex; gap:8px;">
+          <button id="quizNextBtn" class="quiz-btn" style="display:none;">Next</button>
+          <button id="quizCloseBtn" class="quiz-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================
        JavaScript (organized)
        ========================== -->
   <script>
@@ -420,16 +489,14 @@
 
     function logout(){ localStorage.removeItem("isLoggedIn"); window.location.href = "index.html"; }
 
-    // Smooth scroll fix for Get Started button (prevents weird jumps on some devices)
+    // Smooth scroll for Get Started button
     document.getElementById("getStartedBtn").addEventListener("click", function(e){
       e.preventDefault();
       document.getElementById("subjects").scrollIntoView({ behavior: "smooth" });
     });
 
     /* --------------------------
-       Data: subjects and their flashcards + drive (placeholders)
-       -> Replace the drive value with your embedded folder URL or
-          use the embeddedfolderview?id=FOLDER_ID#grid format.
+       Data: subjects and their flashcards + drive
        -------------------------- */
     const subjects = {
       precal: {
@@ -503,11 +570,13 @@
     const flashcardContainer = document.getElementById("flashcard");
     const flashcardFront = document.getElementById("flashcard-front");
     const flashcardBack = document.getElementById("flashcard-back");
+    const takeQuizWrap = document.getElementById("take-quiz-wrap");
 
     /* --------------------------
        Show a subject:
        - Set embedded Drive src (iframe)
        - Show flashcards for that subject
+       - Add Take Quiz button under flashcards
        - Scroll into view
        -------------------------- */
     function showSubject(key) {
@@ -527,6 +596,19 @@
       driveLinkEl.innerHTML = `<a href="${s.drive}" target="_blank" style="color:#00cc66;font-weight:bold;">📂 Open Google Drive (new tab)</a>`;
       flashcardsSection.style.display = "block";
       updateCard();
+
+      // Create or update the Take Quiz button
+      takeQuizWrap.innerHTML = '';
+      const btn = document.createElement("button");
+      btn.textContent = "🧠 Take Quiz";
+      btn.style.background = "#00cc66";
+      btn.style.color = "#000";
+      btn.style.border = "none";
+      btn.style.padding = "10px 18px";
+      btn.style.borderRadius = "8px";
+      btn.style.cursor = "pointer";
+      btn.onclick = () => openQuizModal(key);
+      takeQuizWrap.appendChild(btn);
 
       // Scroll to the drive viewer (so user sees both drive + flashcards)
       window.scrollTo({ top: driveViewer.offsetTop, behavior: "smooth" });
@@ -571,15 +653,152 @@
        initialize (safe call)
        -------------------------- */
     (function init(){
-      // If you want to show something by default, uncomment and set a subject key:
-      // showSubject('precal');
-
       // ensure drive and flashcards hidden initially
       driveFrame.src = "";
       driveViewer.style.display = "none";
       flashcardsSection.style.display = "none";
     })();
+
+    /* ==========================
+       QUIZ DATA (5 MCQ per subject; slightly challenging)
+       ========================== */
+    const quizzes = {
+      precal: [
+        { q: "If f(x)=x^2+2x, what is f'(x)?", opts: ["2x", "2x+2", "x+2", "x^2"], a: 1 },
+        { q: "Solve for x: 2x + 3 = 11", opts: ["3", "4", "8", "5"], a: 0 },
+        { q: "Which of the following is NOT a function?", opts: ["y=x^2", "y=±√x", "y=2x+1", "y=3"], a: 1 },
+        { q: "The graph of y = 1/x has which type of symmetry?", opts: ["y-axis", "x-axis", "origin", "no symmetry"], a: 2 },
+        { q: "What is the domain of √(x-2)?", opts: ["x ≥ 2", "x > 2", "x ≤ 2", "All real numbers"], a: 0 }
+      ],
+      earth: [
+        { q: "Which layer of the Earth is composed mostly of solid iron and nickel?", opts: ["Crust", "Mantle", "Outer Core", "Inner Core"], a: 3 },
+        { q: "Plate tectonics is driven primarily by:", opts: ["Solar radiation", "Convection in the mantle", "Tidal forces", "Earth's magnetic field"], a: 1 },
+        { q: "Which rock type forms from cooling magma?", opts: ["Sedimentary", "Metamorphic", "Igneous", "Alluvial"], a: 2 },
+        { q: "Which instrument measures earthquakes?", opts: ["Hygrometer", "Seismometer", "Barometer", "Anemometer"], a: 1 },
+        { q: "Which gas makes up most of Earth’s atmosphere?", opts: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Argon"], a: 2 }
+      ],
+      oral: [
+        { q: "Which is an example of nonverbal communication?", opts: ["Lecture", "Email", "Facial expressions", "Essay"], a: 2 },
+        { q: "A speaker delivering a persuasive speech should primarily appeal to:", opts: ["Pathos (emotion)", "Ethos (credibility)", "Logos (logic)", "All depending on strategy"], a: 3 },
+        { q: "Active listening includes:", opts: ["Interrupting frequently", "Paraphrasing the speaker", "Ignoring cues", "Answering for them"], a: 1 },
+        { q: "Which is a barrier to effective oral communication?", opts: ["Noise", "Clear language", "Eye contact", "Good posture"], a: 0 },
+        { q: "Tone of voice affects:", opts: ["Meaning only in song", "The message's perceived intent", "Only volume", "None"], a: 1 }
+      ],
+      lit: [
+        { q: "An epic is typically:", opts: ["Short poem", "Long narrative poem", "A novel", "A play"], a: 1 },
+        { q: "Which device is an extended comparison using 'like' or 'as'?", opts: ["Metaphor", "Simile", "Alliteration", "Hyperbole"], a: 1 },
+        { q: "Who wrote 'Paradise Lost'?", opts: ["John Milton", "William Blake", "Geoffrey Chaucer", "Homer"], a: 0 },
+        { q: "In drama, the 'protagonist' is the:", opts: ["Main character", "Antagonist", "Stage setting", "Narrator"], a: 0 },
+        { q: "A theme in literature is:", opts: ["The main idea or message", "A character's name", "The rhyme scheme", "A location"], a: 0 }
+      ],
+      emtech: [
+        { q: "Which is an example of cloud storage?", opts: ["Google Drive", "Hard disk", "USB flash drive", "CD-ROM"], a: 0 },
+        { q: "HTML is used to:", opts: ["Style web pages", "Structure web content", "Store databases", "Secure networks"], a: 1 },
+        { q: "Which tool is primarily for spreadsheets?", opts: ["PowerPoint", "Excel", "Photoshop", "Word"], a: 1 },
+        { q: "Two-factor authentication improves:", opts: ["Speed", "Security", "Storage", "Design"], a: 1 },
+        { q: "Which is open-source?", opts: ["Proprietary software", "Custom firmware", "Linux", "Paid app store"], a: 2 }
+      ]
+    };
+
+    /* ==========================
+       QUIZ MODAL LOGIC
+       ========================== */
+    const quizModal = document.getElementById("quizModal");
+    const quizTitleEl = document.getElementById("quizTitle");
+    const quizProgress = document.getElementById("quizProgress");
+    const quizQuestionEl = document.getElementById("quizQuestion");
+    const quizOptionsEl = document.getElementById("quizOptions");
+    const quizNextBtn = document.getElementById("quizNextBtn");
+    const quizCloseBtn = document.getElementById("quizCloseBtn");
+    const quizResult = document.getElementById("quizResult");
+
+    let activeQuiz = [];
+    let activeKey = '';
+    let qIndex = 0;
+    let qScore = 0;
+
+    function openQuizModal(subjectKey) {
+      if (!quizzes[subjectKey]) {
+        alert("Quiz not available for this subject.");
+        return;
+      }
+      activeQuiz = quizzes[subjectKey].slice(); // clone
+      activeKey = subjectKey;
+      qIndex = 0;
+      qScore = 0;
+      quizResult.textContent = '';
+      quizModal.style.display = "flex";
+      quizModal.setAttribute('aria-hidden','false');
+      quizNextBtn.style.display = 'none';
+      renderQuestion();
+    }
+
+    function closeQuizModal() {
+      quizModal.style.display = "none";
+      quizModal.setAttribute('aria-hidden','true');
+      quizQuestionEl.textContent = '';
+      quizOptionsEl.innerHTML = '';
+      quizResult.textContent = '';
+    }
+
+    function renderQuestion() {
+      const total = activeQuiz.length;
+      const current = activeQuiz[qIndex];
+      quizTitleEl.textContent = subjects[activeKey].title + " Quiz";
+      quizProgress.textContent = `Question ${qIndex + 1} / ${total}`;
+      quizQuestionEl.textContent = current.q;
+      quizOptionsEl.innerHTML = '';
+      quizNextBtn.style.display = 'none';
+      quizResult.textContent = '';
+
+      current.opts.forEach((opt, i) => {
+        const b = document.createElement('button');
+        b.textContent = opt;
+        b.onclick = () => handleAnswer(i, b);
+        b.className = '';
+        quizOptionsEl.appendChild(b);
+      });
+    }
+
+    function handleAnswer(selectedIndex, btnEl) {
+      const correctIndex = activeQuiz[qIndex].a;
+      const buttons = quizOptionsEl.querySelectorAll('button');
+      buttons.forEach((b, idx) => {
+        b.disabled = true;
+        if (idx === correctIndex) b.classList.add('correct');
+        if (idx === selectedIndex && idx !== correctIndex) b.classList.add('wrong');
+      });
+      if (selectedIndex === correctIndex) qScore++;
+      quizNextBtn.style.display = 'inline-block';
+      if (qIndex === activeQuiz.length - 1) {
+        quizNextBtn.textContent = 'Finish';
+      } else {
+        quizNextBtn.textContent = 'Next';
+      }
+    }
+
+    quizNextBtn.addEventListener('click', () => {
+      qIndex++;
+      if (qIndex < activeQuiz.length) {
+        renderQuestion();
+      } else {
+        // show result
+        quizQuestionEl.textContent = '';
+        quizOptionsEl.innerHTML = '';
+        quizResult.textContent = `🎉 Your Score: ${qScore} / ${activeQuiz.length}`;
+        quizNextBtn.style.display = 'none';
+      }
+    });
+
+    quizCloseBtn.addEventListener('click', closeQuizModal);
+
+    // Close modal if user clicks outside the quiz box
+    window.addEventListener('click', (e) => {
+      if (e.target === quizModal) closeQuizModal();
+    });
+
   </script>
 </body>
 </html>
+
 
