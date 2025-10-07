@@ -10,20 +10,18 @@ html, body {
   height: 100%;
   width: 100%;
   background: linear-gradient(135deg, black, #004d00);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite alternate;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 }
 
-/* Optional animated gradient */
 @keyframes gradientShift {
-  0% { background: linear-gradient(135deg, black, #004d00); }
-  50% { background: linear-gradient(135deg, #002200, #006600); }
-  100% { background: linear-gradient(135deg, black, #004d00); }
-}
-
-body {
-  animation: gradientShift 10s infinite alternate;
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Wrapper */
@@ -35,18 +33,20 @@ body {
   box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   width: 90%;
   max-width: 400px;
-  text-align: center;
   display: flex;
-  flex-direction: column; /* stack logo + form */
-  justify-content: center; /* vertically center contents */
-  align-items: center; /* horizontally center contents */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Logo */
 .logo img {
   width: 80px;
-  height: auto;
+  height: 80px; /* force square */
+  object-fit: cover;
+  border-radius: 50%; /* make circular */
   margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 /* Title */
@@ -71,7 +71,6 @@ h1 {
   border: none;
   outline: none;
   font-size: 1rem;
-  transition: all 0.3s ease;
   background: rgba(255,255,255,0.2);
   color: #fff;
 }
@@ -85,7 +84,46 @@ h1 {
   font-size: 1.2rem;
 }
 
-/* Buttons */
+/* Show Password */
+.show-password {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.show-password input {
+  margin-right: 8px;
+}
+
+/* Remember / Forgot */
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.remember-forgot label {
+  display: flex;
+  align-items: center;
+}
+
+.remember-forgot a {
+  color: #00ff00;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  color: #00cc00;
+}
+
+/* Button */
 .btn {
   width: 100%;
   padding: 12px;
@@ -103,28 +141,20 @@ h1 {
   transform: scale(1.05);
 }
 
-/* Show password / Remember / Forgot / Register */
-.show-password, .remember-forgot, .register-link {
+/* Register Link */
+.register-link p {
   color: #fff;
   font-size: 0.9rem;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.remember-forgot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.remember-forgot a {
-  color: #00ff00;
-  text-decoration: none;
+  margin-top: 15px;
 }
 
 .register-link a {
   color: #00ff00;
   text-decoration: none;
+}
+
+.register-link a:hover {
+  color: #00cc00;
 }
 
 /* Shake animation */
@@ -152,6 +182,7 @@ h1 {
 
   .logo img {
     width: 60px;
+    height: 60px;
     margin-bottom: 15px;
   }
 
