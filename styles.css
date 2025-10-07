@@ -120,7 +120,14 @@ h1 {
 .remember-forgot label {
   display: flex;
   align-items: center;
-  gap: 8px; /* space between checkbox and text */
+  gap: 8px; /* horizontal space between checkbox and text */
+}
+
+/* Optional: make checkbox size consistent across devices */
+.remember-forgot input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0; /* remove default spacing that OS may add */
 }
 
 .remember-forgot a {
@@ -206,6 +213,8 @@ h1 {
     gap: 5px;
   }
 }
+
+
 
 
 
