@@ -1,91 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduConnect Login</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduConnect Login</title>
+<link rel="stylesheet" href="styles.css">
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
   <div class="wrapper" id="loginWrapper">
-    
-    <!-- Logo -->
     <div class="logo">
       <img src="logo.jpg" alt="EduConnect Logo">
     </div>
-
-    <!-- Title -->
     <h1>EduConnect</h1>
-
     <form id="loginForm">
-      <!-- Username Input -->
       <div class="input-box">
         <input type="text" placeholder="Username" id="username" required autocomplete="username">
         <i class="fa fa-user"></i>
       </div>
-
-      <!-- Password Input -->
       <div class="input-box">
         <input type="password" placeholder="Password" id="password" required autocomplete="current-password">
         <i class="fa fa-lock"></i>
       </div>
-
-      <!-- Show Password -->
       <label class="show-password">
         <input type="checkbox" id="togglePassword"> Show Password
       </label>
-
-      <!-- Remember / Forgot -->
       <div class="remember-forgot">
         <label><input type="checkbox"> Remember me</label>
         <a href="#">Forgot Password?</a>
       </div>
-
-      <!-- Login Button -->
       <button type="submit" class="btn">Log In</button>
-
-      <!-- Register Link -->
       <div class="register-link">
         <p>Don't have an account? <a href="#">Sign Up</a></p>
       </div>
     </form>
   </div>
 
-  <!-- ===== Scripts ===== -->
   <script>
     const togglePassword = document.getElementById('togglePassword');
     const passwordField = document.getElementById('password');
     const loginForm = document.getElementById('loginForm');
     const loginWrapper = document.getElementById('loginWrapper');
 
-    // Show / hide password
+    // Toggle password visibility
     togglePassword.addEventListener('change', () => {
       passwordField.type = togglePassword.checked ? 'text' : 'password';
     });
 
-    // Login functionality with shake animation
+    // Login validation with shake animation
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
       if(username === 'student' && password === '12345') {
-        window.location.href = 'website.html'; // update to your main page
+        window.location.href = 'website.html';
       } else {
         loginWrapper.classList.add('shake');
-        setTimeout(() => {
-          loginWrapper.classList.remove('shake');
-        }, 500);
+        setTimeout(() => loginWrapper.classList.remove('shake'), 500);
       }
     });
   </script>
-
-  <!-- Font Awesome for icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
 </body>
 </html>
+
 
 
 
