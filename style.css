@@ -443,7 +443,7 @@
 }
 
 /* Mobile responsiveness */
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   .blog-container {
     overflow-x: scroll;
     flex-wrap: nowrap;
@@ -453,4 +453,5 @@
     flex: 0 0 250px;
   }
 }
+
 
