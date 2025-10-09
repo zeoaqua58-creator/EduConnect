@@ -1,485 +1,177 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EduConnect</title>
-
-  <!-- ==========================
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduConnect</title>
+<!-- ==========================
        Styles (organized)
        ========================== -->
-  <style>
-    /* Reset + base */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    html { scroll-behavior: smooth; }
-    body { background-color: #fff; color: #000; display: flex; flex-direction: column; align-items: center; }
 
-    /* --------------------------
-       NAVIGATION BAR
-       -------------------------- */
-    .navbar {
-      width: 100%;
-      background-color: #1a1a1a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 0;
-      gap: 25px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .navbar a {
-      color: #00cc66;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1em;
-      transition: 0.3s;
-    }
-    .navbar a:hover { color: #00ff99; text-decoration: underline; }
-
-    /* --------------------------
-       HEADER
-       -------------------------- */
-    header {
-      width: 100%;
-      background-color: #1a1a1a;
-      color: white;
-      text-align: center;
-      padding: 25px 10px;
-    }
-    .logo img {
-      width: 120px; height: 120px; object-fit: cover; border-radius: 50%;
-      border: 3px solid #00cc66; margin-bottom: 10px;
-    }
-    .logo img:hover { box-shadow: 0 0 20px #00ff99; transform: scale(1.05); transition: 0.3s ease; }
-    .header-pic { margin-top: 10px; font-size: 14px; }
-    h1 { font-size: 2.5em; margin-top: 10px; color: #016d3b; }
-
-    /* --------------------------
-       HERO
-       -------------------------- */
-    .hero {
-      position: relative;
-      width: 100%;
-      min-height: 70vh;
-      background: linear-gradient(120deg, #003300, #00cc66);
-      background-size: 400% 400%;
-      animation: gradientMove 8s ease infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    .hero-content { max-width: 700px; animation: fadeInUp 1.5s ease; }
-    .hero h1 span { color: #070707; }
-    .hero p { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.4; }
-    .hero-btn {
-      background: #00ff99; color: #003300; padding: 12px 28px; border-radius: 25px;
-      text-decoration: none; font-weight: 600; transition: 0.3s; display:inline-block;
-    }
-    .hero-btn:hover { background: #fff; color: #000000; transform: scale(1.05); }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; } 
-      50% { background-position: 100% 50%; } 
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes fadeInUp { 
-      from { opacity: 0; transform: translateY(30px); } 
-      to { opacity: 1; transform: translateY(0); } 
-    }
-
-    /* --------------------------
-       ABOUT
-       -------------------------- */
-    .about-section {
-      display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;
-      gap: 20px; width: 90%; margin: 30px 0;
-    }
-    .about-pic {
-      background-color: #1a1a1a; color: white; display: flex; align-items: center; justify-content: center;
-      width: 250px; height: 200px; font-size: 1.5em; font-weight: bold; border-radius: 10px;
-    }
-    .about-text { max-width: 400px; line-height: 1.6; }
-    .about-text h3 { margin-bottom: 5px; color: #00cc66; }
-    .learn-more {
-      background-color: #00cc66; border: none; padding: 8px 15px; color: black; border-radius: 8px;
-      margin-top: 10px; cursor: pointer; font-weight: bold; transition: 0.3s;
-    }
-    .learn-more:hover { background-color: #00ff88; }
-
-    /* --------------------------
-       ABOUT VIDEOS (3 portrait columns)
-       -------------------------- */
-    .about-videos {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 25px;
-      width: 100%;
-    }
-
-    .about-video {
-      width: 100%;
-      height: 400px; /* taller for portrait */
-      border-radius: 10px;
-      border: 3px solid #00cc66;
-      object-fit: contain;
-      background-color: #000;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .about-video:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #00ff99;
-    }
-
-    @media (max-width: 900px) {
-      .about-videos { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .about-videos { grid-template-columns: 1fr; }
-      .about-video { height: 350px; }
-    }
-
-    /* --------------------------
-       SUBJECTS (grid)
-       -------------------------- */
-    .subjects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
-      width: 90%;
-      margin-bottom: 40px;
-    }
-    .subject-box {
-      background-color: #1a1a1a;
-      color: white;
-      text-align: center;
-      padding: 40px 0;
-      font-weight: bold;
-      border-radius: 10px;
-      transition: transform 0.3s, background-color 0.3s;
-      cursor: pointer;
-      position: relative;
-    }
-    .subject-box:hover { transform: scale(1.05); background-color: #00cc66; color: black; }
-
-    /* --------------------------
-       DRIVE VIEWER (embedded iframe)
-       -------------------------- */
-    #drive-viewer {
-      display: none;
-      width: 90%;
-      height: 560px;
-      margin: 20px auto;
-    }
-    #driveFrame { width: 100%; height: 100%; border: 2px solid #00cc66; border-radius: 10px; }
-
-    /* --------------------------
-       FLASHCARDS (front/back)
-       -------------------------- */
-    .flashcard-section {
-      text-align: center;
-      margin: 40px 0;
-      width: 100%;
-      display: none;
-    }
-
-    .flashcard-container {
-      position: relative;
-      width: 320px;
-      height: 200px;
-      margin: 20px auto;
-      perspective: 1000px;
-    }
-
-    .flashcard-inner {
-      position: absolute;
-      width: 100%; height: 100%;
-      backface-visibility: hidden;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      padding: 16px;
-      font-size: 1.05rem; text-align: center;
-      transition: transform 0.6s;
-    }
-    .flashcard-front { background: #1a1a1a; color: #fff; }
-    .flashcard-back  { background: #00cc66; color: #000; transform: rotateY(180deg); }
-
-    .flashcard-container.flip .flashcard-front { transform: rotateY(180deg); }
-    .flashcard-container.flip .flashcard-back  { transform: rotateY(0deg); }
-
-    .flashcard-controls { display: flex; justify-content: center; gap: 15px; margin-top: 8px; }
-    .flashcard-controls button {
-      background-color: #00cc66; border: none; padding: 10px 20px; color: black;
-      border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s;
-    }
-    .flashcard-controls button:hover { background-color: #00ff99; }
-
-    /* placeholder for Take Quiz button */
-    #take-quiz-wrap { margin-top: 16px; }
-
-    /* --------------------------
-       FOOTER
-       -------------------------- */
-    footer {
-      background-color: #f0f0f0;
-      width: 100%;
-      text-align: center;
-      padding: 15px;
-      font-size: 1em;
-    }
-    footer a { margin: 0 10px; color: #00cc66; text-decoration: none; font-weight: bold; }
-    footer a:hover { text-decoration: underline; }
-
-    /* --------------------------
-       MODAL (About)
-       -------------------------- */
-    .modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;
-    }
-    .modal-content { background-color: white; padding: 20px; border-radius: 10px; max-width: 400px; text-align: center; }
-    .close-btn { background-color: #00cc66; border: none; padding: 8px 15px; color: black; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: bold; }
-
-    /* --------------------------
-       QUIZ MODAL (dark theme)
-       -------------------------- */
-    .quiz-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 2000; }
-    .quiz-content {
-      width: 90%;
-      max-width: 700px;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-      background: #222; /* dark gray */
-      color: #e6ffee; /* light greenish text */
-      text-align: left;
-    }
-    .quiz-header { display:flex; justify-content:space-between; align-items:center; gap:10px; }
-    .quiz-title { color: #00cc66; font-size: 1.3rem; margin:0; }
-    .quiz-body { margin-top: 16px; }
-    .quiz-question { font-size: 1.1rem; margin-bottom: 12px; color: #dfffe3; }
-    .quiz-options { display:flex; flex-direction:column; gap:10px; }
-    .quiz-options button {
-      background: #333;
-      color: #e6ffee;
-      border: 2px solid #333;
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: left;
-    }
-    .quiz-options button:hover { border-color: #00cc66; }
-    .quiz-options button.correct { background: #005b2a; border-color: #00cc66; color: #dfffe3; }
-    .quiz-options button.wrong { background: #3a1a1a; border-color: #ff6666; color: #ffdede; }
-    .quiz-footer { margin-top: 16px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
-    .quiz-btn { background: #00cc66; color: black; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:bold; }
-    .quiz-close { background: #444; color: #e6ffee; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
-
-    @media (max-width:600px) {
-      .quiz-content { padding: 14px; }
-      .quiz-question { font-size: 1rem; }
-    }
-  </style>
-</head>
+<link href="style.css" rel="stylesheet"/></head>
 <body>
-
-  <!-- ==========================
+<!-- ==========================
        NAVIGATION
        ========================== -->
-  <nav class="navbar">
-    <a href="#about">About</a>
-    <a href="#subjects">Subjects</a>
-    <a href="#flashcards">Flashcards</a>
-    <a href="#contact">Contact</a>
-    <a href="#" onclick="logout()">Logout</a>
-  </nav>
-
-  <!-- ==========================
+<nav class="navbar">
+<a href="#about">About</a>
+<a href="#subjects">Subjects</a>
+<a href="#flashcards">Flashcards</a>
+<a href="#contact">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+<!-- ==========================
        HEADER
        ========================== -->
-  <header>
-    <div class="logo">
-      <img src="logo.jpg" alt="EduConnect Logo">
-    </div>
-    <div class="header-pic">A Learning Buddy for STEM Students</div>
-    <h1>EDUCONNECT</h1>
-  </header>
-
-  <!-- ==========================
+<header>
+<div class="logo">
+<img alt="EduConnect Logo" src="logo.jpg"/>
+</div>
+<div class="header-pic">A Learning Buddy for STEM Students</div>
+<h1>EDUCONNECT</h1>
+</header>
+<!-- ==========================
        HERO
        ========================== -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Welcome to <span>EduConnect</span></h1>
-      <p>Empowering students through technology and connection.</p>
-      <a href="#subjects" class="hero-btn" id="getStartedBtn">Get Started</a>
-    </div>
-  </section>
-
-  <!-- ==========================
+<section class="hero">
+<div class="hero-content">
+<h1>Welcome to <span>EduConnect</span></h1>
+<p>Empowering students through technology and connection.</p>
+<a class="hero-btn" href="#subjects" id="getStartedBtn">Get Started</a>
+</div>
+</section>
+<!-- ==========================
        ABOUT
        ========================== -->
-  <section id="about" class="about-section">
-    <div class="about-pic">📘 EDUCATION</div>
-
-    <div class="about-text">
-      <h3>About Us</h3>
-      <p>This platform serves as a community-focused resource for students, teachers, and lifelong learners in the STEM strand, promoting collaboration and knowledge sharing. Its mission is to eliminate learning barriers, providing accessible education for anyone in STEM—whether high school students needing assistance, teachers sharing resources, or hobbyists eager to learn and develop skills.</p>
-      <h3>Mission</h3>
-      <p>To make education more accessible and engaging.</p>
-      <h3>Vision</h3>
-      <p>Empowering learners through technology.</p>
-      <h3>Goals</h3>
-      <p>Enhance collaboration and simplify learning.</p>
-      <button class="learn-more" onclick="openModal()">Learn More</button>
-    </div>
-
+<section class="about-section" id="about">
+<div class="about-pic">📘 EDUCATION</div>
+<div class="about-text">
+<h3>About Us</h3>
+<p>This platform serves as a community-focused resource for students, teachers, and lifelong learners in the STEM strand, promoting collaboration and knowledge sharing. Its mission is to eliminate learning barriers, providing accessible education for anyone in STEM—whether high school students needing assistance, teachers sharing resources, or hobbyists eager to learn and develop skills.</p>
+<h3>Mission</h3>
+<p>To make education more accessible and engaging.</p>
+<h3>Vision</h3>
+<p>Empowering learners through technology.</p>
+<h3>Goals</h3>
+<p>Enhance collaboration and simplify learning.</p>
+<button class="learn-more" onclick="openModal()">Learn More</button>
+</div>
 <!-- 🎥 3 Portrait Videos -->
 <div class="about-videos">
-  <iframe class="about-video"
-    src="https://www.youtube.com/embed/px7Zfpq7UaY"
-    title="About 1"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <iframe class="about-video"
-    src="https://www.youtube.com/embed/517zfkjpHzM"
-    title="About 2"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <iframe class="about-video"
-    src="https://www.youtube.com/embed/ukFWkA7Q9j8"
-    title="About 3"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" class="about-video" frameborder="0" src="https://www.youtube.com/embed/px7Zfpq7UaY" title="About 1">
+</iframe>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" class="about-video" frameborder="0" src="https://www.youtube.com/embed/517zfkjpHzM" title="About 2">
+</iframe>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" class="about-video" frameborder="0" src="https://www.youtube.com/embed/ukFWkA7Q9j8" title="About 3">
+</iframe>
 </div>
 
-<style>
-.about-videos {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 20px;
-}
+<section id="subjects" class="subjects">
+  <div class="subject-box" onclick="showSubject('precal')">
+    <img src="images/precal.jpg" alt="Pre-Calculus">
+    <span>PRE-CAL</span>
+  </div>
 
-.about-video {
-  width: 300px;
-  height: 533px; /* portrait format for Shorts */
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  border: none;
-}
-</style>
+  <div class="subject-box" onclick="showSubject('earth')">
+    <img src="images/earth.jpg" alt="Earth Science">
+    <span>EARTH SCIENCE</span>
+  </div>
 
-  <!-- ==========================
-       SUBJECTS (these trigger drive + flashcards)
-       ========================== -->
-  <section id="subjects" class="subjects">
-    <div class="subject-box" onclick="showSubject('precal')">PRE-CAL</div>
-    <div class="subject-box" onclick="showSubject('earth')">EARTH SCIENCE</div>
-    <div class="subject-box" onclick="showSubject('oral')">ORAL COMMUNICATION</div>
-    <div class="subject-box" onclick="showSubject('bio')">GENERAL BIOLOGY</div>
-    <div class="subject-box" onclick="showSubject('lit')">LITERATURE</div>
-    <div class="subject-box" onclick="showSubject('emtech')">EMPOWERMENT TECHNOLOGY</div>
-  </section>
+  <div class="subject-box" onclick="showSubject('oral')">
+    <img src="images/oral.jpg" alt="Oral Communication">
+    <span>ORAL COMMUNICATION</span>
+  </div>
 
-  <!-- ==========================
+  <div class="subject-box" onclick="showSubject('bio')">
+    <img src="images/bio.jpg" alt="General Biology">
+    <span>GENERAL BIOLOGY</span>
+  </div>
+
+  <div class="subject-box" onclick="showSubject('lit')">
+    <img src="images/lit.jpg" alt="Literature">
+    <span>LITERATURE</span>
+  </div>
+
+  <div class="subject-box" onclick="showSubject('emtech')">
+    <img src="images/emtech.jpg" alt="Empowerment Technology">
+    <span>EMPOWERMENT TECHNOLOGY</span>
+  </div>
+</section>
+
+<!-- ==========================
        DRIVE VIEWER (embedded) - appears when subject selected
        ========================== -->
-  <section id="drive-viewer">
-    <!-- Replace the href with your embedded folder URL or folder id form:
+<section id="drive-viewer">
+<!-- Replace the href with your embedded folder URL or folder id form:
          https://drive.google.com/embeddedfolderview?id=YOUR_FOLDER_ID#grid -->
-    <iframe id="driveFrame" src="" title="Drive Viewer"></iframe>
-  </section>
-
-  <!-- ==========================
+<iframe id="driveFrame" src="" title="Drive Viewer"></iframe>
+</section>
+<!-- ==========================
        FLASHCARDS (subject-specific)
        ========================== -->
-  <section id="flashcards" class="flashcard-section">
-    <h2 id="subject-title" style="color:#00cc66;">📚 Subject Flashcards</h2>
-    <p id="drive-link" style="margin:10px 0;"></p>
-
-    <!-- Card container with front/back faces (no backwards text) -->
-    <div class="flashcard-container" id="flashcard">
-      <div class="flashcard-inner flashcard-front" id="flashcard-front">Click to Flip</div>
-      <div class="flashcard-inner flashcard-back" id="flashcard-back"></div>
-    </div>
-
-    <!-- Controls -->
-    <div class="flashcard-controls" role="group" aria-label="Flashcard controls">
-      <button id="prevBtn" onclick="prevCard()" aria-label="Previous card">⬅️ Back</button>
-      <button id="flipBtn" onclick="flipCard()" aria-label="Flip card">🔄 Flip</button>
-      <button id="nextBtn" onclick="nextCard()" aria-label="Next card">➡️ Next</button>
-    </div>
-
-    <!-- placeholder where Take Quiz button will be inserted -->
-    <div id="take-quiz-wrap" style="display:flex; justify-content:center;"></div>
-  </section>
-
-  <!-- ==========================
+<section class="flashcard-section" id="flashcards">
+<h2 id="subject-title" style="color:#00cc66;">📚 Subject Flashcards</h2>
+<p id="drive-link" style="margin:10px 0;"></p>
+<!-- Card container with front/back faces (no backwards text) -->
+<div class="flashcard-container" id="flashcard">
+<div class="flashcard-inner flashcard-front" id="flashcard-front">Click to Flip</div>
+<div class="flashcard-inner flashcard-back" id="flashcard-back"></div>
+</div>
+<!-- Controls -->
+<div aria-label="Flashcard controls" class="flashcard-controls" role="group">
+<button aria-label="Previous card" id="prevBtn" onclick="prevCard()">⬅️ Back</button>
+<button aria-label="Flip card" id="flipBtn" onclick="flipCard()">🔄 Flip</button>
+<button aria-label="Next card" id="nextBtn" onclick="nextCard()">➡️ Next</button>
+</div>
+<!-- placeholder where Take Quiz button will be inserted -->
+<div id="take-quiz-wrap" style="display:flex; justify-content:center;"></div>
+</section>
+<!-- ==========================
        FOOTER
        ========================== -->
-  <footer id="contact">
-    <strong>Contact:</strong><br>
-    <a href="mailto:email@educonnect.com">Email</a> |
+<footer id="contact">
+<strong>Contact:</strong><br/>
+<a href="mailto:email@educonnect.com">Email</a> |
     <a href="tel:+639123456789">Call</a> |
     <a href="https://facebook.com" target="_blank">Facebook</a>
-  </footer>
-
-  <!-- ==========================
+</footer>
+<!-- ==========================
        MODAL (About)
        ========================== -->
-  <div class="modal" id="infoModal">
-    <div class="modal-content">
-      <h2>About EduConnect</h2>
-      <p>EduConnect bridges the gap between learners and educators by offering easy access to educational tools, subject materials, and interactive learning features. Our goal is to make learning fun, accessible, and effective for everyone.</p>
-      <button class="close-btn" onclick="closeModal()">Close</button>
-    </div>
-  </div>
-
-  <!-- ==========================
+<div class="modal" id="infoModal">
+<div class="modal-content">
+<h2>About EduConnect</h2>
+<p>EduConnect bridges the gap between learners and educators by offering easy access to educational tools, subject materials, and interactive learning features. Our goal is to make learning fun, accessible, and effective for everyone.</p>
+<button class="close-btn" onclick="closeModal()">Close</button>
+</div>
+</div>
+<!-- ==========================
        QUIZ MODAL (dark themed)
        ========================== -->
-  <div class="quiz-modal" id="quizModal" aria-hidden="true">
-    <div class="quiz-content" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
-      <div class="quiz-header">
-        <h3 id="quizTitle" class="quiz-title">Quiz</h3>
-        <div id="quizProgress" style="color:#c7ffd4; font-size:0.95rem;"></div>
-      </div>
-
-      <div class="quiz-body">
-        <div id="quizQuestion" class="quiz-question"></div>
-        <div id="quizOptions" class="quiz-options"></div>
-      </div>
-
-      <div class="quiz-footer">
-        <div id="quizResult" style="color:#dfffe3; font-weight:bold;"></div>
-        <div style="margin-left:auto; display:flex; gap:8px;">
-          <button id="quizNextBtn" class="quiz-btn" style="display:none;">Next</button>
-          <button id="quizCloseBtn" class="quiz-close">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================
+<div aria-hidden="true" class="quiz-modal" id="quizModal">
+<div aria-labelledby="quizTitle" aria-modal="true" class="quiz-content" role="dialog">
+<div class="quiz-header">
+<h3 class="quiz-title" id="quizTitle">Quiz</h3>
+<div id="quizProgress" style="color:#c7ffd4; font-size:0.95rem;"></div>
+</div>
+<div class="quiz-body">
+<div class="quiz-question" id="quizQuestion"></div>
+<div class="quiz-options" id="quizOptions"></div>
+</div>
+<div class="quiz-footer">
+<div id="quizResult" style="color:#dfffe3; font-weight:bold;"></div>
+<div style="margin-left:auto; display:flex; gap:8px;">
+<button class="quiz-btn" id="quizNextBtn" style="display:none;">Next</button>
+<button class="quiz-close" id="quizCloseBtn">Close</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ==========================
        JavaScript (organized)
        ========================== -->
-  <script>
+<script>
     /* --------------------------
        Helpers / UI functions
        -------------------------- */
@@ -798,7 +490,8 @@
     });
 
   </script>
-</body>
+</section></body>
 </html>
+
 
 
