@@ -49,6 +49,7 @@
 <div class="about-text">
 <h3>About Us</h3>
 <p>This platform serves as a community-focused resource for students, teachers, and lifelong learners in the STEM strand, promoting collaboration and knowledge sharing. Its mission is to eliminate learning barriers, providing accessible education for anyone in STEM—whether high school students needing assistance, teachers sharing resources, or hobbyists eager to learn and develop skills.</p>
+<div class="blog-list" style="display:flex; gap:15px; overflow-x:auto; padding-bottom:10px; scroll-snap-type:x mandatory;"></div>
 <h3>Mission</h3>
 <p>To make education more accessible and engaging.</p>
 <h3>Vision</h3>
@@ -69,32 +70,32 @@
 
 <section id="subjects" class="subjects">
   <div class="subject-box" onclick="showSubject('precal')">
-    <img src="precal.jpg" alt="Pre-Calculus">
+    <img src="images/precal.jpg" alt="Pre-Calculus">
     <span>PRE-CAL</span>
   </div>
 
   <div class="subject-box" onclick="showSubject('earth')">
-    <img src="earth.jpg" alt="Earth Science">
+    <img src="images/earth.jpg" alt="Earth Science">
     <span>EARTH SCIENCE</span>
   </div>
 
   <div class="subject-box" onclick="showSubject('oral')">
-    <img src="oral.jpg" alt="Oral Communication">
+    <img src="images/oral.jpg" alt="Oral Communication">
     <span>ORAL COMMUNICATION</span>
   </div>
 
   <div class="subject-box" onclick="showSubject('bio')">
-    <img src="bio.jpg" alt="General Biology">
+    <img src="images/bio.jpg" alt="General Biology">
     <span>GENERAL BIOLOGY</span>
   </div>
 
   <div class="subject-box" onclick="showSubject('lit')">
-    <img src="lit.jpg" alt="Literature">
+    <img src="images/lit.jpg" alt="Literature">
     <span>LITERATURE</span>
   </div>
 
   <div class="subject-box" onclick="showSubject('emtech')">
-    <img src="emtech.jpg" alt="Empowerment Technology">
+    <img src="images/emtech.jpg" alt="Empowerment Technology">
     <span>EMPOWERMENT TECHNOLOGY</span>
   </div>
 </section>
@@ -127,15 +128,7 @@
 <!-- placeholder where Take Quiz button will be inserted -->
 <div id="take-quiz-wrap" style="display:flex; justify-content:center;"></div>
 </section>
-<!-- ==========================
-       FOOTER
-       ========================== -->
-<footer id="contact">
-<strong>Contact:</strong><br/>
-<a href="mailto:email@educonnect.com">Email</a> |
-    <a href="tel:+639123456789">Call</a> |
-    <a href="https://facebook.com" target="_blank">Facebook</a>
-</footer>
+
 <!-- ==========================
        MODAL (About)
        ========================== -->
@@ -490,8 +483,108 @@
     });
 
   </script>
-</section></body>
-</html>
+  <section id="blogs" class="blogs-section">
+<h2>📌 Community Blogs</h2>
+<form class="blog-form">
+<input type="text" placeholder="Blog Title" class="blog-title-input" required />
+<textarea placeholder="Write your blog here..." class="blog-content-input" required></textarea>
+<button type="submit" class="blog-submit-btn">Post Blog</button>
+</form>
+<div class="blog-list">
+<!-- Blog posts will appear here dynamically -->
+</div>
+</section>
+
+
+<!-- JavaScript for Blogs -->
+<script>
+/* Blog: render posts, add delete (trash) button, animation, mobile-friendly swipe */
+(function(){
+  const blogForm = document.querySelector('.blog-form');
+  const blogList = document.querySelector('.blog-list'); // first .blog-list on page
+
+  if (!blogForm || !blogList) {
+    console.warn('Blog form or blog list not found. Make sure .blog-form and .blog-list exist in the page.');
+    return;
+  }
+
+  // helper: escape HTML to avoid injection
+  function escapeHtml(str = '') {
+    return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function createPostElement(blog, index) {
+    const card = document.createElement('article');
+    card.className = 'blog-post';
+    // Build inner HTML (title + delete button + content)
+    card.innerHTML = `
+      <div class="blog-top">
+        <h3 class="blog-title">${escapeHtml(blog.title)}</h3>
+        <button class="delete-blog" aria-label="Delete post" title="Delete post">🗑</button>
+      </div>
+      <div class="blog-content">${escapeHtml(blog.content).replace(/\n/g,'<br>')}</div>
+    `;
+    // attach delete handler that uses the current index
+    const delBtn = card.querySelector('.delete-blog');
+    delBtn.addEventListener('click', () => {
+      deleteBlog(index);
+    });
+    return card;
+  }
+
+  function loadBlogs() {
+    const blogs = JSON.parse(localStorage.getItem('blogs')) || [];
+    blogList.innerHTML = '';
+    blogs.forEach((b, i) => {
+      const el = createPostElement(b, i);
+      blogList.appendChild(el);
+    });
+  }
+
+  function deleteBlog(index) {
+    const blogs = JSON.parse(localStorage.getItem('blogs')) || [];
+    if (index < 0 || index >= blogs.length) return;
+    blogs.splice(index, 1);
+    localStorage.setItem('blogs', JSON.stringify(blogs));
+    loadBlogs();
+  }
+
+  // handle submit
+  blogForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = blogForm.querySelector('.blog-title-input').value.trim();
+    const content = blogForm.querySelector('.blog-content-input').value.trim();
+    if (!title || !content) return;
+    const blogs = JSON.parse(localStorage.getItem('blogs')) || [];
+    blogs.push({ title, content, created: Date.now() });
+    localStorage.setItem('blogs', JSON.stringify(blogs));
+    blogForm.reset();
+    loadBlogs();
+    // scroll newly added post into view (first card)
+    setTimeout(() => {
+      const firstPost = blogList.querySelector('.blog-post');
+      if (firstPost) firstPost.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+    }, 60);
+  });
+
+  // initial load
+  loadBlogs();
+
+  // expose for debugging if needed
+  window.deleteBlog = deleteBlog;
+})();
+</script>
+
+<!-- ==========================
+       FOOTER
+       ========================== -->
+<footer id="contact">
+<strong>Contact:</strong><br/>
+<a href="mailto:email@educonnect.com">Email</a> |
+    <a href="tel:+639123456789">Call</a> |
+    <a href="https://facebook.com" target="_blank">Facebook</a>
+</footer>
+
 
 
 
