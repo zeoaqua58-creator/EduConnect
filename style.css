@@ -1,0 +1,332 @@
+
+    /* Reset + base */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: #fff; color: #000; display: flex; flex-direction: column; align-items: center; }
+
+    /* --------------------------
+       NAVIGATION BAR
+       -------------------------- */
+    .navbar {
+      width: 100%;
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      gap: 25px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar a {
+      color: #00cc66;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1em;
+      transition: 0.3s;
+    }
+    .navbar a:hover { color: #00ff99; text-decoration: underline; }
+
+    /* --------------------------
+       HEADER
+       -------------------------- */
+    header {
+      width: 100%;
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+    }
+    .logo img {
+      width: 120px; height: 120px; object-fit: cover; border-radius: 50%;
+      border: 3px solid #00cc66; margin-bottom: 10px;
+    }
+    .logo img:hover { box-shadow: 0 0 20px #00ff99; transform: scale(1.05); transition: 0.3s ease; }
+    .header-pic { margin-top: 10px; font-size: 14px; }
+    h1 { font-size: 2.5em; margin-top: 10px; color: #016d3b; }
+
+    /* --------------------------
+       HERO
+       -------------------------- */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  background: url("hero.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Optional overlay for readability */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* darken for better contrast */
+}
+
+.hero-content {
+  position: relative; /* keeps text above overlay */
+  max-width: 700px;
+  animation: fadeInUp 1.5s ease;
+}
+
+    .hero-content { max-width: 700px; animation: fadeInUp 1.5s ease; }
+    .hero h1 span { color: #070707; }
+    .hero p { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.4; }
+    .hero-btn {
+      background: #00ff99; color: #003300; padding: 12px 28px; border-radius: 25px;
+      text-decoration: none; font-weight: 600; transition: 0.3s; display:inline-block;
+    }
+    .hero-btn:hover { background: #fff; color: #000000; transform: scale(1.05); }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; } 
+      50% { background-position: 100% 50%; } 
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes fadeInUp { 
+      from { opacity: 0; transform: translateY(30px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    /* --------------------------
+       ABOUT
+       -------------------------- */
+    .about-section {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;
+      gap: 20px; width: 90%; margin: 30px 0;
+    }
+    .about-pic {
+      background-color: #1a1a1a; color: white; display: flex; align-items: center; justify-content: center;
+      width: 250px; height: 200px; font-size: 1.5em; font-weight: bold; border-radius: 10px;
+    }
+    .about-text { max-width: 400px; line-height: 1.6; }
+    .about-text h3 { margin-bottom: 5px; color: #00cc66; }
+    .learn-more {
+      background-color: #00cc66; border: none; padding: 8px 15px; color: black; border-radius: 8px;
+      margin-top: 10px; cursor: pointer; font-weight: bold; transition: 0.3s;
+    }
+    .learn-more:hover { background-color: #00ff88; }
+
+    /* --------------------------
+       ABOUT VIDEOS (3 portrait columns)
+       -------------------------- */
+    .about-videos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 25px;
+      width: 100%;
+    }
+
+    .about-video {
+      width: 100%;
+      height: 400px; /* taller for portrait */
+      border-radius: 10px;
+      border: 3px solid #00cc66;
+      object-fit: contain;
+      background-color: #000;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-video:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00ff99;
+    }
+
+    @media (max-width: 900px) {
+      .about-videos { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .about-videos { grid-template-columns: 1fr; }
+      .about-video { height: 350px; }
+    }
+
+    /* --------------------------
+       SUBJECTS (grid)
+       -------------------------- */
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      width: 90%;
+      margin-bottom: 40px;
+    }
+.subject-box {
+  background-color: #1a1a1a;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.subject-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ff99;
+}
+
+.subject-box img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.subject-box span {
+  display: block;
+  padding: 12px;
+  font-weight: bold;
+  background: #1a1a1a;
+  color: #00ff99;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.subject-box:hover span {
+  background: #00ff99;
+  color: #000;
+}
+
+    /* --------------------------
+       DRIVE VIEWER (embedded iframe)
+       -------------------------- */
+    #drive-viewer {
+      display: none;
+      width: 90%;
+      height: 560px;
+      margin: 20px auto;
+    }
+    #driveFrame { width: 100%; height: 100%; border: 2px solid #00cc66; border-radius: 10px; }
+
+    /* --------------------------
+       FLASHCARDS (front/back)
+       -------------------------- */
+    .flashcard-section {
+      text-align: center;
+      margin: 40px 0;
+      width: 100%;
+      display: none;
+    }
+
+    .flashcard-container {
+      position: relative;
+      width: 320px;
+      height: 200px;
+      margin: 20px auto;
+      perspective: 1000px;
+    }
+
+    .flashcard-inner {
+      position: absolute;
+      width: 100%; height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+      font-size: 1.05rem; text-align: center;
+      transition: transform 0.6s;
+    }
+    .flashcard-front { background: #1a1a1a; color: #fff; }
+    .flashcard-back  { background: #00cc66; color: #000; transform: rotateY(180deg); }
+
+    .flashcard-container.flip .flashcard-front { transform: rotateY(180deg); }
+    .flashcard-container.flip .flashcard-back  { transform: rotateY(0deg); }
+
+    .flashcard-controls { display: flex; justify-content: center; gap: 15px; margin-top: 8px; }
+    .flashcard-controls button {
+      background-color: #00cc66; border: none; padding: 10px 20px; color: black;
+      border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s;
+    }
+    .flashcard-controls button:hover { background-color: #00ff99; }
+
+    /* placeholder for Take Quiz button */
+    #take-quiz-wrap { margin-top: 16px; }
+
+    /* --------------------------
+       FOOTER
+       -------------------------- */
+    footer {
+      background-color: #f0f0f0;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      font-size: 1em;
+    }
+    footer a { margin: 0 10px; color: #00cc66; text-decoration: none; font-weight: bold; }
+    footer a:hover { text-decoration: underline; }
+
+    /* --------------------------
+       MODAL (About)
+       -------------------------- */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;
+    }
+    .modal-content { background-color: white; padding: 20px; border-radius: 10px; max-width: 400px; text-align: center; }
+    .close-btn { background-color: #00cc66; border: none; padding: 8px 15px; color: black; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+
+    /* --------------------------
+       QUIZ MODAL (dark theme)
+       -------------------------- */
+    .quiz-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 2000; }
+    .quiz-content {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      background: #222; /* dark gray */
+      color: #e6ffee; /* light greenish text */
+      text-align: left;
+    }
+    .quiz-header { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .quiz-title { color: #00cc66; font-size: 1.3rem; margin:0; }
+    .quiz-body { margin-top: 16px; }
+    .quiz-question { font-size: 1.1rem; margin-bottom: 12px; color: #dfffe3; }
+    .quiz-options { display:flex; flex-direction:column; gap:10px; }
+    .quiz-options button {
+      background: #333;
+      color: #e6ffee;
+      border: 2px solid #333;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .quiz-options button:hover { border-color: #00cc66; }
+    .quiz-options button.correct { background: #005b2a; border-color: #00cc66; color: #dfffe3; }
+    .quiz-options button.wrong { background: #3a1a1a; border-color: #ff6666; color: #ffdede; }
+    .quiz-footer { margin-top: 16px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .quiz-btn { background: #00cc66; color: black; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:bold; }
+    .quiz-close { background: #444; color: #e6ffee; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+
+    @media (max-width:600px) {
+      .quiz-content { padding: 14px; }
+      .quiz-question { font-size: 1rem; }
+    }
+  
+
+
+.about-videos {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.about-video {
+  width: 300px;
+  height: 533px; /* portrait format for Shorts */
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  border: none;
+}
