@@ -4,9 +4,7 @@
     html { scroll-behavior: smooth; }
     body { background-color: #fff; color: #000; display: flex; flex-direction: column; align-items: center; }
 
-    /* --------------------------
-       NAVIGATION BAR
-       -------------------------- */
+
     .navbar {
       width: 100%;
       background-color: #1a1a1a;
@@ -28,9 +26,6 @@
     }
     .navbar a:hover { color: #00ff99; text-decoration: underline; }
 
-    /* --------------------------
-       HEADER
-       -------------------------- */
     header {
       width: 100%;
       background-color: #1a1a1a;
@@ -46,9 +41,7 @@
     .header-pic { margin-top: 10px; font-size: 14px; }
     h1 { font-size: 2.5em; margin-top: 10px; color: #016d3b; }
 
-    /* --------------------------
-       HERO
-       -------------------------- */
+
 .hero {
   position: relative;
   width: 100%;
@@ -130,9 +123,7 @@
     }
     .learn-more:hover { background-color: #00ff88; }
 
-    /* --------------------------
-       ABOUT VIDEOS (3 portrait columns)
-       -------------------------- */
+
     .about-videos {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -164,9 +155,7 @@
       .about-video { height: 350px; }
     }
 
-    /* --------------------------
-       SUBJECTS (grid)
-       -------------------------- */
+
     .subjects {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -211,9 +200,7 @@
   color: #000;
 }
 
-    /* --------------------------
-       DRIVE VIEWER (embedded iframe)
-       -------------------------- */
+
     #drive-viewer {
       display: none;
       width: 90%;
@@ -222,9 +209,7 @@
     }
     #driveFrame { width: 100%; height: 100%; border: 2px solid #00cc66; border-radius: 10px; }
 
-    /* --------------------------
-       FLASHCARDS (front/back)
-       -------------------------- */
+
     .flashcard-section {
       text-align: center;
       margin: 40px 0;
@@ -266,9 +251,7 @@
     /* placeholder for Take Quiz button */
     #take-quiz-wrap { margin-top: 16px; }
 
-    /* --------------------------
-       FOOTER
-       -------------------------- */
+
     footer {
       background-color: #f0f0f0;
       width: 100%;
@@ -279,9 +262,7 @@
     footer a { margin: 0 10px; color: #00cc66; text-decoration: none; font-weight: bold; }
     footer a:hover { text-decoration: underline; }
 
-    /* --------------------------
-       MODAL (About)
-       -------------------------- */
+
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;
@@ -453,5 +434,6 @@
     flex: 0 0 250px;
   }
 }
+
 
 
