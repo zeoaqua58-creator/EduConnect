@@ -1,5 +1,5 @@
 
-    /* Reset + base */
+
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     html { scroll-behavior: smooth; }
     body { background-color: #fff; color: #000; display: flex; flex-direction: column; align-items: center; }
@@ -55,7 +55,7 @@
   padding: 40px 20px;
 }
 
-/* Optional overlay for readability */
+
 .hero::before {
   content: "";
   position: absolute;
@@ -248,7 +248,7 @@
     }
     .flashcard-controls button:hover { background-color: #00ff99; }
 
-    /* placeholder for Take Quiz button */
+   
     #take-quiz-wrap { margin-top: 16px; }
 
 
@@ -270,9 +270,7 @@
     .modal-content { background-color: white; padding: 20px; border-radius: 10px; max-width: 400px; text-align: center; }
     .close-btn { background-color: #00cc66; border: none; padding: 8px 15px; color: black; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: bold; }
 
-    /* --------------------------
-       QUIZ MODAL (dark theme)
-       -------------------------- */
+   
     .quiz-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 2000; }
     .quiz-content {
       width: 90%;
@@ -328,9 +326,7 @@
   border: none;
 }
 
-/* --------------------------
-   COMMUNITY BLOGS - HORIZONTAL SCROLL
--------------------------- */
+
 .blogs-section { 
   width: 90%;
   margin: 40px auto;
@@ -350,7 +346,7 @@
   letter-spacing: 1px;
 }
 
-/* Horizontal scroll container */
+
 .blog-container {
   display: flex;
   gap: 20px;
@@ -374,7 +370,7 @@
   background: transparent;
 }
 
-/* Individual blog card */
+
 .blog-post {
   flex: 0 0 300px; /* width of each card */
   background: #ffffff;
@@ -423,8 +419,8 @@
   transform: scale(1.3);
 }
 
-/* Mobile responsiveness */
-@media (max-width: 600px) {
+
+@media (max-width: 650px) {
   .blog-container {
     overflow-x: scroll;
     flex-wrap: nowrap;
@@ -434,6 +430,7 @@
     flex: 0 0 250px;
   }
 }
+
 
 
 
