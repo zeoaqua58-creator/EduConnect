@@ -1,4 +1,4 @@
-/* ===== Reset + Base ===== */
+
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +12,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== Background ===== */
+
 body {
   display: flex;
   justify-content: center;
@@ -28,7 +28,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* ===== Wrapper ===== */
+
 .wrapper {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -43,7 +43,6 @@ body {
   justify-content: center;
 }
 
-/* ===== Logo ===== */
 .logo img {
   width: 80px;
   height: 80px;
@@ -53,7 +52,7 @@ body {
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-/* ===== Title ===== */
+
 h1 {
   color: #fff;
   margin-bottom: 30px;
@@ -61,7 +60,7 @@ h1 {
   letter-spacing: 1px;
 }
 
-/* ===== Input Boxes ===== */
+
 .input-box {
   position: relative;
   margin-bottom: 20px;
@@ -92,7 +91,7 @@ h1 {
   font-size: 1.2rem;
 }
 
-/* ===== Show Password ===== */
+
 .show-password {
   display: flex;
   align-items: center;
@@ -106,7 +105,7 @@ h1 {
   margin-right: 8px;
 }
 
-/* ===== Remember / Forgot ===== */
+
 .remember-forgot {
   display: flex;
   justify-content: space-between;
@@ -139,7 +138,7 @@ h1 {
   color: #00cc00;
 }
 
-/* ===== Button ===== */
+
 .btn {
   width: 100%;
   padding: 12px;
@@ -157,7 +156,6 @@ h1 {
   transform: scale(1.05);
 }
 
-/* ===== Register Link ===== */
 .register-link p {
   color: #fff;
   font-size: 0.9rem;
@@ -173,7 +171,7 @@ h1 {
   color: #00cc00;
 }
 
-/* ===== Shake Animation ===== */
+
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-8px); }
@@ -213,6 +211,7 @@ h1 {
     gap: 5px;
   }
 }
+
 
 
 
